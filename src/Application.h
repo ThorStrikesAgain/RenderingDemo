@@ -3,5 +3,5 @@
 class Application
 {
 public:
-	void Execute(int argc, char *argv[]);
+	void Execute(HINSTANCE hInstance);
 };
