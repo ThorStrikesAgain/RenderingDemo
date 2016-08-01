@@ -14,6 +14,17 @@ LRESULT CALLBACK MainWindowProc(
 	WPARAM wParam,
 	LPARAM lParam)
 {
+	switch (uMsg)
+	{
+	case WM_PAINT:
+		PAINTSTRUCT paint;
+		HDC displayDeviceContext = BeginPaint(hwnd, &paint);
+		assert(displayDeviceContext != NULL);
+		EndPaint(hwnd, &paint);
+		return 0; // Message processed.
+		break;
+	}
+
 	return DefWindowProc(hwnd, uMsg, wParam, lParam); // TODO.
 }
 
@@ -80,7 +91,7 @@ void Application::Execute(HINSTANCE hInstance, int nCmdShow)
 		}
 		if (ret == -1)
 		{
-			// TODO: Retrieve the error with GetLastError.
+			// TODO: Retrieve the error with GetLastError and handle it properly.
 			break;
 		}
 
