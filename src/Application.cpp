@@ -17,7 +17,7 @@ LRESULT CALLBACK MainWindowProc(
 	return DefWindowProc(hwnd, uMsg, wParam, lParam); // TODO.
 }
 
-void Application::Execute(HINSTANCE hInstance)
+void Application::Execute(HINSTANCE hInstance, int nCmdShow)
 {
 	// Create the window class.
 	LPCTSTR mainWindowClassName = L"MainWindow";
@@ -58,4 +58,33 @@ void Application::Execute(HINSTANCE hInstance)
 		hInstance,
 		NULL); // No additional data
 	assert(mainWindowHwnd != NULL);
+
+	// Display the window.
+	// TODO: Do this after drawing for the first time...
+	ShowWindow(mainWindowHwnd, nCmdShow);
+
+	// Main Loop.
+	while (true)
+	{
+		//int ret = GetMessage;
+		MSG msg;
+		int ret = GetMessage(
+			&msg,
+			mainWindowHwnd,
+			0, // Get all messages.
+			0);
+		if (ret == 0)
+		{
+			// WM_QUIT
+			break;
+		}
+		if (ret == -1)
+		{
+			// TODO: Retrieve the error with GetLastError.
+			break;
+		}
+
+		TranslateMessage(&msg); // Interpret key combinations.
+		DispatchMessage(&msg); // Dispatch to the proper window proc.
+	}
 }
