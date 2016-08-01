@@ -14,12 +14,13 @@ LRESULT CALLBACK MainWindowProc(
 	WPARAM wParam,
 	LPARAM lParam)
 {
-	// TODO.
-	return 0;
+	return DefWindowProc(hwnd, uMsg, wParam, lParam); // TODO.
 }
 
 void Application::Execute(HINSTANCE hInstance)
 {
+	// Create the window class.
+	LPCTSTR mainWindowClassName = L"MainWindow";
 	WNDCLASSEX mainWindowClass;
 	SecureZeroMemory(&mainWindowClass, sizeof(WNDCLASSEX));
 	mainWindowClass.cbSize = sizeof(WNDCLASSEX);
@@ -37,8 +38,24 @@ void Application::Execute(HINSTANCE hInstance)
 	mainWindowClass.hCursor = NULL;
 	mainWindowClass.hbrBackground = NULL;
 	mainWindowClass.lpszMenuName = NULL;
-	mainWindowClass.lpszClassName = L"MainWindow";
+	mainWindowClass.lpszClassName = mainWindowClassName;
 	mainWindowClass.hIconSm = NULL;
 	ATOM mainWindowClassAtom = RegisterClassEx(&mainWindowClass);
 	assert(mainWindowClassAtom != 0);
+
+	// Create the window.
+	HWND mainWindowHwnd = CreateWindowEx(
+		WS_EX_LEFT,
+		mainWindowClassName,
+		L"Title", // TODO: Set title.
+		WS_OVERLAPPEDWINDOW,
+		CW_USEDEFAULT, // TODO: Force a start location.
+		CW_USEDEFAULT,
+		480, // TODO: Force another resolution.
+		360,
+		NULL, // No Parent
+		NULL, // No menu
+		hInstance,
+		NULL); // No additional data
+	assert(mainWindowHwnd != NULL);
 }
