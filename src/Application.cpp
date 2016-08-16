@@ -1,5 +1,6 @@
-#include <Windows.h>
+﻿#include <Windows.h>
 #include <gl/GL.h>
+#include <Wingdi.h>
 
 #include <assert.h>
 #include <iostream>
@@ -8,21 +9,84 @@
 
 using namespace std;
 
-LRESULT CALLBACK MainWindowProc(
+LRESULT CALLBACK Application::StaticMainWindowProc(
 	HWND   hwnd,
 	UINT   uMsg,
 	WPARAM wParam,
 	LPARAM lParam)
 {
+	return Application::Instance().InstanceMainWindowProc(hwnd, uMsg, wParam, lParam);
+}
+
+LRESULT CALLBACK Application::InstanceMainWindowProc(
+		HWND   hwnd,
+		UINT   uMsg,
+		WPARAM wParam,
+		LPARAM lParam)
+	{
 	switch (uMsg)
 	{
-	case WM_PAINT:
-		PAINTSTRUCT paint;
-		HDC displayDeviceContext = BeginPaint(hwnd, &paint);
-		assert(displayDeviceContext != NULL);
-		EndPaint(hwnd, &paint);
-		return 0; // Message processed.
-		break;
+		case WM_CREATE:
+		{
+			assert(mOpenGLContext == NULL);
+			mDeviceContext = GetWindowDC(hwnd);
+
+			PIXELFORMATDESCRIPTOR pfd = {
+				sizeof(PIXELFORMATDESCRIPTOR),    // size of this pfd
+				1,                                // version number
+				PFD_DRAW_TO_WINDOW |              // support window
+				PFD_SUPPORT_OPENGL |              // support OpenGL
+				PFD_DOUBLEBUFFER,                 // double buffered
+				PFD_TYPE_RGBA,                    // RGBA type
+				24,                               // 24-bit color depth
+				0, 0, 0, 0, 0, 0,                 // color bits ignored
+				0,                                // no alpha buffer
+				0,                                // shift bit ignored
+				0,                                // no accumulation buffer
+				0, 0, 0, 0,                       // accum bits ignored
+				32,                               // 32-bit z-buffer
+				0,                                // no stencil buffer
+				0,                                // no auxiliary buffer
+				PFD_MAIN_PLANE,                   // main layer
+				0,                                // reserved
+				0, 0, 0                           // layer masks ignored
+			};
+
+			// get the device context's best, available pixel format match
+			int iPixelFormat = ChoosePixelFormat(mDeviceContext, &pfd);
+
+			// make that match the device context's current pixel format
+			SetPixelFormat(mDeviceContext, iPixelFormat, &pfd);
+
+			mOpenGLContext = wglCreateContext(mDeviceContext);
+			assert(mOpenGLContext != NULL);
+
+			BOOL success = wglMakeCurrent(mDeviceContext, mOpenGLContext);
+			assert(success);
+
+			return 0; // Continue the creation of the window.
+		}
+		case WM_PAINT:
+		{
+			glClearColor(1, 0, 0, 1);
+			glClear(GL_COLOR_BUFFER_BIT);
+			glFlush();
+			SwapBuffers(mDeviceContext);
+			return 0; // Message processed.
+		}
+		case WM_CLOSE:
+		{
+			// TODO: We could confirm here.
+			DestroyWindow(hwnd);
+			return 0; // Message processed.
+		}
+		case WM_DESTROY:
+		{
+			// TODO: Destroy the OpenGL Context.
+			BOOL success = wglDeleteContext(mOpenGLContext);
+			assert(success);
+			return 0; // Message processed.
+		}
 	}
 
 	return DefWindowProc(hwnd, uMsg, wParam, lParam); // TODO.
@@ -40,8 +104,8 @@ void Application::Execute(HINSTANCE hInstance, int nCmdShow)
 		CS_DBLCLKS |     // Sends double-click events
 		CS_HREDRAW |     // Redraws on horizontal resize
 		CS_VREDRAW |     // Redraws on vertical resize
-		CS_PARENTDC;     // Won't use parent device context
-	mainWindowClass.lpfnWndProc = MainWindowProc;
+		CS_OWNDC;        // Allocate a unique device context for each window
+	mainWindowClass.lpfnWndProc = StaticMainWindowProc;
 	mainWindowClass.cbClsExtra = 0;
 	mainWindowClass.cbWndExtra = 0;
 	mainWindowClass.hInstance = hInstance;

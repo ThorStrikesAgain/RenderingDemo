@@ -9,7 +9,7 @@ int CALLBACK WinMain(
 	LPSTR     lpCmdLine,
 	int       nCmdShow)
 {
-	Application app;
+	auto& app = Application::Instance();
 	app.Execute(hInstance, nCmdShow);
 
 	// TODO: Return the exit value contained in the message's wParam, or zero if before entering the message loop.
