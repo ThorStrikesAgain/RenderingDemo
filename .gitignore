@@ -11,9 +11,7 @@
 src/.vs/
 
 #Build results
-src/[Dd]ebug
-src/[Rr]elease
 src/Engine/[Dd]ebug
 src/Engine/[Rr]elease
-src/Frontend/obj
-src/Frontend/bin
+src/Editor/obj
+src/Editor/bin
