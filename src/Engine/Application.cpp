@@ -29,7 +29,7 @@ LRESULT CALLBACK Application::InstanceMainWindowProc(
 		case WM_CREATE:
 		{
 			assert(mOpenGLContext == NULL);
-			mDeviceContext = GetWindowDC(hwnd);
+			mDeviceContext = GetDC(hwnd);
 
 			PIXELFORMATDESCRIPTOR pfd = {
 				sizeof(PIXELFORMATDESCRIPTOR),    // size of this pfd
@@ -68,10 +68,14 @@ LRESULT CALLBACK Application::InstanceMainWindowProc(
 		}
 		case WM_PAINT:
 		{
+			PAINTSTRUCT paintStruct;
+			HDC deviceContext = BeginPaint(hwnd, &paintStruct);
+			assert(deviceContext == mDeviceContext); // Because of CS_OWNDC.
 			glClearColor(1, 0, 0, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
 			glFlush();
 			SwapBuffers(mDeviceContext);
+			EndPaint(hwnd, &paintStruct); // Is this necessary?
 			return 0; // Message processed.
 		}
 		case WM_CLOSE:
@@ -137,6 +141,7 @@ void Application::Execute(HINSTANCE hInstance, int nCmdShow)
 	// Display the window.
 	// TODO: Do this after drawing for the first time...
 	ShowWindow(mainWindowHwnd, nCmdShow);
+	UpdateWindow(mainWindowHwnd);
 
 	// Main Loop.
 	while (true)
