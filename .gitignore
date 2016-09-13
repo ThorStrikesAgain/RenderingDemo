@@ -4,14 +4,16 @@
 
 # Visual C++ cache files
 *.sdf
+*.opensdf
 *.VC.VC.opendb
 *.VC.db
 
-# Visual Studio 2015 cache/options directory
+# Visual Studio 2013 cache/options directory
 src/.vs/
 
 #Build results
+src/x64
 src/Engine/[Dd]ebug
-src/Engine/[Rr]elease
-src/Editor/obj
-src/Editor/bin
+src/Engine/x64
+src/Host/GeneratedFiles
+src/Host/x64
