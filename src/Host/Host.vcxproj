@@ -139,6 +139,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\Material.cpp" />
+    <ClCompile Include="Engine\Shader.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_host.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
@@ -210,6 +212,8 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\Material.h" />
+    <ClInclude Include="Engine\Shader.h" />
     <ClInclude Include="GeneratedFiles\ui_host.h" />
     <CustomBuild Include="viewport.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
