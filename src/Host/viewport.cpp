@@ -1,11 +1,13 @@
 #include "viewport.h"
 
-#include <Windows.h>
-#include <gl/GL.h>
-#include <Wingdi.h>
+#include <fstream>
+#include <sstream>
+#include <string>
 
-#include <qopenglcontext.h>
-#include <qopenglfunctions_4_3_core.h>
+#include "Engine/Engine.h"
+#include "Engine/Shader.h"
+
+using namespace RenderingDemo;
 
 Viewport::Viewport(QWidget *parent) : QOpenGLWidget(parent)
 {
@@ -19,23 +21,32 @@ Viewport::~Viewport()
 {
 }
 
+// TODO: Move this to a utilities file.
+static std::string ReadAllText(char const *path)
+{
+	auto fs = std::ifstream{ path, std::ios_base::in };
+	auto ss = std::ostringstream{};
+	ss << fs.rdbuf();
+	return ss.str();
+}
+
 void Viewport::initializeGL()
 {
 	QOpenGLWidget::initializeGL();
-	//glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+	
+	// Initialize the engine.
+	Engine::GetInstance();
+
+	std::string vertCode = ReadAllText("E:/Alexandre/Projets/RenderingDemo/src/Host/Shaders/Basic.vert");
+	std::string fragCode = ReadAllText("E:/Alexandre/Projets/RenderingDemo/src/Host/Shaders/Basic.frag");
+	Shader test{ vertCode, fragCode };
 }
 
 void Viewport::paintGL()
 {
 	QOpenGLWidget::paintGL();
-	QOpenGLContext *c = QOpenGLContext::currentContext();
-	QSurfaceFormat format = c->format();
-	int major = format.majorVersion();
-	int minor = format.minorVersion();
-
-	QOpenGLFunctions_4_3_Core *f = c->versionFunctions<QOpenGLFunctions_4_3_Core>();
-	f->glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
-	f->glClear(GL_COLOR_BUFFER_BIT);
+	gGL->glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+	gGL->glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void Viewport::resizeGL(int w, int h)
