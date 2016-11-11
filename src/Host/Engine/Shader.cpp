@@ -10,6 +10,9 @@ namespace RenderingDemo
 	{
 		GLint result;
 
+		program_ = gGL->glCreateProgram();
+		Q_ASSERT(program_ != 0);
+
 		vert_ = gGL->glCreateShader(GL_VERTEX_SHADER);
 		Q_ASSERT(vert_ != 0);
 		char const *vertCodeChars = vertCode.c_str();
@@ -17,6 +20,7 @@ namespace RenderingDemo
 		gGL->glCompileShader(vert_);
 		gGL->glGetShaderiv(vert_, GL_COMPILE_STATUS, &result);
 		Q_ASSERT(result == GL_TRUE);
+		gGL->glAttachShader(program_, vert_);
 		
 		frag_ = gGL->glCreateShader(GL_FRAGMENT_SHADER);
 		Q_ASSERT(frag_ != 0);
@@ -25,18 +29,31 @@ namespace RenderingDemo
 		gGL->glCompileShader(frag_);
 		gGL->glGetShaderiv(frag_, GL_COMPILE_STATUS, &result);
 		Q_ASSERT(result == GL_TRUE);
+		gGL->glAttachShader(program_, frag_);
 
+		gGL->glLinkProgram(program_);
+		gGL->glGetProgramiv(program_, GL_LINK_STATUS, &result);
+		Q_ASSERT(result == GL_TRUE);
 	}
 
 	Shader::~Shader()
 	{
-		Q_ASSERT(vert_ != 0);
-		Q_ASSERT(frag_ != 0);
+		Q_ASSERT(program_ != 0);
+		gGL->glDeleteProgram(program_);
+		program_ = 0;
 
+		Q_ASSERT(vert_ != 0);
 		gGL->glDeleteShader(vert_);
 		vert_ = 0;
 
+		Q_ASSERT(frag_ != 0);
 		gGL->glDeleteShader(frag_);
 		frag_ = 0;
+	}
+
+	void Shader::Use() const
+	{
+		Q_ASSERT(program_ != 0);
+		gGL->glUseProgram(program_);
 	}
 }
