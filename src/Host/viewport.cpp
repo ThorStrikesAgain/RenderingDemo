@@ -7,6 +7,8 @@
 #include "Engine/Engine.h"
 #include "Engine/Shader.h"
 
+#include "Engine/GameObject.h"
+
 using namespace RenderingDemo;
 
 Viewport::Viewport(QWidget *parent) : QOpenGLWidget(parent)
@@ -75,6 +77,12 @@ void Viewport::paintGL()
 		GL_FALSE, // Must be normalized?
 		0,        // Stride (tightly packed)
 		NULL);    // No offset from the start of the buffer
+
+	{
+		GameObject go;
+		go.SetName("GameObject");
+		Q_ASSERT(go.GetName() == "GameObject");
+	}
 
 	// Draw.
 	gGL->glEnableVertexAttribArray(0);

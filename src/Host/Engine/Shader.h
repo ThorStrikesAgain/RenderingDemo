@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Engine.h"
+#include "Object.h"
 
 namespace RenderingDemo
 {
-	class Shader
+	class Shader : public Object
 	{
 	public:
 		/// @param[in]  vertCode Vertex shader code.

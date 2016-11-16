@@ -139,8 +139,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\Component.cpp" />
     <ClCompile Include="Engine\Engine.cpp" />
+    <ClCompile Include="Engine\GameObject.cpp" />
     <ClCompile Include="Engine\Material.cpp" />
+    <ClCompile Include="Engine\Object.cpp" />
     <ClCompile Include="Engine\Shader.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_host.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -213,8 +216,11 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\Component.h" />
     <ClInclude Include="Engine\Engine.h" />
+    <ClInclude Include="Engine\GameObject.h" />
     <ClInclude Include="Engine\Material.h" />
+    <ClInclude Include="Engine\Object.h" />
     <ClInclude Include="Engine\Shader.h" />
     <ClInclude Include="GeneratedFiles\ui_host.h" />
     <CustomBuild Include="viewport.h">

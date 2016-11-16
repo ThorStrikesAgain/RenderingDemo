@@ -2,8 +2,6 @@
 
 #include <QtGlobal>
 
-#include "Engine.h"
-
 namespace RenderingDemo
 {
 	Shader::Shader(std::string const &vertCode, std::string const &fragCode)
