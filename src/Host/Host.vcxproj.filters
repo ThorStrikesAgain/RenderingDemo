@@ -83,6 +83,9 @@
     <ClCompile Include="Engine\Component.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Transform.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="host.ui">
@@ -118,6 +121,9 @@
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Component.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Transform.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>
