@@ -77,14 +77,14 @@
     <ClCompile Include="Engine\GameObject.cpp">
       <Filter>Source\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Object.cpp">
-      <Filter>Generated Files</Filter>
+    <ClCompile Include="Engine\Transform.cpp">
+      <Filter>Source\Engine</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Component.cpp">
-      <Filter>Generated Files</Filter>
+      <Filter>Source\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Transform.cpp">
-      <Filter>Generated Files</Filter>
+    <ClCompile Include="Engine\Object.cpp">
+      <Filter>Source\Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -117,14 +117,14 @@
     <ClInclude Include="Engine\GameObject.h">
       <Filter>Source\Engine</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Transform.h">
+      <Filter>Source\Engine</Filter>
+    </ClInclude>
     <ClInclude Include="Engine\Object.h">
-      <Filter>Generated Files</Filter>
+      <Filter>Source\Engine</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Component.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Transform.h">
-      <Filter>Generated Files</Filter>
+      <Filter>Source\Engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
