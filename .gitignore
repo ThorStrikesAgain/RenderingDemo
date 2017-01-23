@@ -12,10 +12,12 @@
 src/.vs/
 
 #Build results
-src/x64
 src/Debug
-src/Engine/[Dd]ebug
-src/Engine/x64
+src/Editor/obj
+src/Engine/Debug
+
 src/Host/Debug
 src/Host/GeneratedFiles
 src/Host/x64
+
+
